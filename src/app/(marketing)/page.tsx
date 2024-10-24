@@ -1,9 +1,18 @@
 import { Container, Icons, Wrapper } from "@/components";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import SectionBadge from "@/components/ui/section-badge";
-import { features, perks } from "@/constants";
-import { ArrowRight, ChevronRight } from "lucide-react";
+import { features, perks, pricingCards } from "@/constants";
+import { cn } from "@/lib/utils";
+import { ArrowRight, ChevronRight, Zap } from "lucide-react";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -152,13 +161,14 @@ const HomePage = () => {
           <div className="flex flex-col items-center justify-center py-10 md:py-20 w-full">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-8">
               {features.map((feature) => (
-                <div key={feature.title} className="flex flex-col items-start px-0">
+                <div
+                  key={feature.title}
+                  className="flex flex-col items-start px-0"
+                >
                   <div className="flex items-center justify-center">
                     <feature.icon className="w-8 h-8" />
                   </div>
-                  <h3 className="text-lg font-medium mt-4">
-                    {feature.title}
-                  </h3>
+                  <h3 className="text-lg font-medium mt-4">{feature.title}</h3>
                   <p className="text-muted-foreground mt-2 text-start">
                     {feature.info}
                   </p>
@@ -169,7 +179,6 @@ const HomePage = () => {
         </Container>
       </Wrapper>
 
-
       {/* Pricing */}
       <Wrapper className="flex flex-col items-center justify-center py-12 relative">
         <Container>
@@ -178,11 +187,63 @@ const HomePage = () => {
             <h2 className="text-3xl lg:text-4xl font-semibold mt-6">
               Unlock the right plan for your business
             </h2>
-            <p className="">Choose the best plan foe your business and start building your dream website today</p>
+            <p className="text-muted-foreground mt-6">
+              Choose the best plan foe your business and start building your
+              dream website today
+            </p>
+          </div>
+        </Container>
+        <Container className="flex items-center justify-center">
+          <div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 
+          w-full md:gap-8 py-10 md:py-20 flex-wrap max-w-4xl"
+          >
+            {pricingCards.map((card) => (
+              <Card
+                key={card.title}
+                className={cn(
+                  "flex flex-col w-full border-neutral-700",
+                  card.title == "Two Saas" && "border-2 border-primary"
+                )}
+              >
+                <CardHeader className="border-2 border-border">
+                  <span>{card.title}</span>
+                  <CardTitle
+                    className={cn(
+                      card.title !== "Two Saas" && "text-muted-foreground"
+                    )}
+                  >
+                    {card.price}
+                  </CardTitle>
+                  <CardDescription className="">
+                    {card.description}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="pt-6 space-y-3">
+                  {card.features.map((feature) => (
+                    <div key={feature} className="flex items-center gap-2">
+                      <Zap className="w-4 h-4 fill-primary text-primary" />
+                      <p>{feature}</p>
+                    </div>
+                  ))}
+                </CardContent>
+                <CardFooter className="mt-auto w-full">
+                  <Link
+                    href="#"
+                    className={cn(
+                      "w-full text-center text-primary-foreground bg-primary p-2 rounded-md text-sm font-medium",
+                      card.title !== "Two Saas" &&
+                        "!bg-foreground !text-background"
+                    )}
+                  >
+                    {card.buttonText}
+                  </Link>
+                </CardFooter>
+              </Card>
+            ))}
           </div>
         </Container>
       </Wrapper>
-
     </section>
   );
 };
