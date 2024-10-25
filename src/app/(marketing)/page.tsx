@@ -203,14 +203,14 @@ const HomePage = () => {
                 key={card.title}
                 className={cn(
                   "flex flex-col w-full border-neutral-700",
-                  card.title == "Two Saas" && "border-2 border-primary"
+                  card.title == "Premium Plan" && "border-2 border-primary"
                 )}
               >
                 <CardHeader className="border-2 border-border">
                   <span>{card.title}</span>
                   <CardTitle
                     className={cn(
-                      card.title !== "Two Saas" && "text-muted-foreground"
+                      card.title !== "Premium Plan" && "text-muted-foreground"
                     )}
                   >
                     {card.price}
@@ -232,7 +232,7 @@ const HomePage = () => {
                     href="#"
                     className={cn(
                       "w-full text-center text-primary-foreground bg-primary p-2 rounded-md text-sm font-medium",
-                      card.title !== "Two Saas" &&
+                      card.title !== "Premium Plan" &&
                         "!bg-foreground !text-background"
                     )}
                   >
