@@ -3,9 +3,11 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "../../../public/icons/logo.svg";
 import { buttonVariants } from "../ui/button";
+import { currentUser } from "@clerk/nextjs/server";
+import { UserButton } from "@clerk/nextjs";
 
-const Navbar = () => {
-  const user = false;
+const Navbar = async() => {
+  const user = await currentUser();
 
   return (
     <div
@@ -48,7 +50,7 @@ const Navbar = () => {
 
         <div className="flex items-center gap-4">
           {user ? (
-            "user button"
+            <UserButton />
           ) : (
             <>
               <Link
