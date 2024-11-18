@@ -1,13 +1,18 @@
-import { NextResponse } from 'next/server'
-import { clerkMiddleware } from '@clerk/nextjs/server'
+import { NextResponse } from 'next/server';
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
 // Add Clerk middleware
-const isHomeRoute =  (req: Request) => req.url === '/';
-
-console.log("The Route", isHomeRoute);
+const isHomeRoute =  createRouteMatcher(["/"]);
 
 
-export default clerkMiddleware()
+export default clerkMiddleware((auth, req) => {
+  
+  const { userId } = auth();
+
+  if (userId && isHomeRoute(req)) {
+    return NextResponse.rewrite(new URL("/",req.url));
+  }
+});
 
 export const config = {
   matcher: [
@@ -16,4 +21,4 @@ export const config = {
     // Always run for API routes
     '/(api|trpc)(.*)',
   ],
-}
+};
