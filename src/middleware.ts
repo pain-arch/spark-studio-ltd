@@ -1,20 +1,6 @@
-import { NextResponse } from 'next/server';
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { clerkMiddleware } from '@clerk/nextjs/server';
 
-// Add Clerk middleware
-const isHomeRoute =  createRouteMatcher(["/"]);
-
-
-export default clerkMiddleware(async (auth, req) => {
-  
-  const authObject = await auth();
-
-  const { userId } = authObject;
-
-  if (userId && isHomeRoute(req)) {
-    return NextResponse.rewrite(new URL("/",req.url));
-  }
-});
+export default clerkMiddleware();
 
 export const config = {
   matcher: [
